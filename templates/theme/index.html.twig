@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Thème Admin{% endblock %}
+
+{% block body %}
+    <h1>Les Thèmes</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Ordre</th>
+                <th>Utiliser</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for theme in themes %}
+            <tr>
+                <td>{{ theme.nom }}</td>
+                <td>{{ theme.ordre }}</td>
+                <td>{{ theme.utiliser ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a class="btn btn-primary" href="{{ path('app_theme_show', {'id': theme.id}) }}">Voire</a>
+                    <a class="btn btn-primary" href="{{ path('app_theme_edit', {'id': theme.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-success" href="{{ path('app_theme_new') }}"> + Thème</a>
+{% endblock %}

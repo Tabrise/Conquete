@@ -1,0 +1,44 @@
+{% block body %}
+	<div class="container align-middle">
+		<div class="row">
+			<div class="col-2">
+				<b>Nom</b>
+			</div>
+			<div class="col-2">
+				<b>Prenom</b>
+			</div>
+			<div class="col-2">
+				<b>Poste</b>
+			</div>
+			<div class="col-2">
+				<b>Email</b>
+			</div>
+			<div class="col-2">
+				<b>Tel</b>
+			</div>
+			{% if is_granted('ROLE_ADMIN')%}
+				<div class="col-2"></div>
+			{% endif %}
+
+			{% for contact in contacts %}
+				{% if societe is same as contact.idSociete %}
+					<hr/>
+					<div class="w-100"></div>
+					<div class="col-2">{{contact.nom}}</div>
+					<div class="col-2">{{contact.prenom}}</div>
+					<div class="col-2">{{contact.poste}}</div>
+					<div class="col-2">{{contact.email}}</div>
+					<div class="col-2">{{contact.tel}}</div>
+					<div class="col-2">
+						<a class="btn btn-primary" href="{{ path('app_modifier_contact',{'c':contact}) }}">Modifier</a>
+					</div>
+					{% if is_granted('ROLE_ADMIN')%}
+						<div class="col-2">
+							<a class="btn btn-danger" href="{{ path('app_suprimer_contact',{'c':contact}) }}">Supprimer</a>
+						</div>
+					{% endif %}
+				{% endif %}
+			{% endfor %}
+
+		</div>
+	{% endblock %}

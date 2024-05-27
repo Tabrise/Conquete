@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Questions Admin
+{% endblock %}
+
+{% block body %}
+	<h1>Les Questions</h1>
+	<div class="accordion" id="accordion">
+		{% for theme in themes %}
+			<div class="accordion-item" data-id="{{ theme.id }}" draggable="true">
+				<h2 class="accordion-header">
+					<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{theme.id}}" aria-expanded="true" aria-controls="collapse{{theme.id}}">
+						{{ theme.nom }}
+					</button>
+				</h2>
+				<div id="collapse{{theme.id}}" class="accordion-collapse collapse" data-bs-parent="#accordion">
+					<div class="accordion-body">
+						{% for question in questions %}
+							{% if theme is same as question.getIdTheme() %}
+								<div>{{question.intitule}}
+								</div>
+							{% endif %}
+						{% endfor %}
+						<a class="btn btn-success" href="{{ path('app_question_new',{'t': theme.id}) }}">Ajouter Question</a>
+
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+
+	</div>
+
+	<button id="save-order-btn" class="btn btn-primary" data-url="{{ path('theme_order') }}">Save Order</button>
+
+	{# Inclure le fichier JavaScript #}
+	<script src="{{ asset('js/dragDrop.js') }}"></script>
+
+
+{% endblock %}

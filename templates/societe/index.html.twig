@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les Prospects
+{% endblock %}
+
+{% block body %}
+	<style>
+
+	</style>
+
+	<div>
+		<h1>Mes Prospects</h1>
+
+		<table class="table table-hover">
+			<tr>
+				<th scope="col">Nom</th>
+				<th scope="col">Siret</th>
+				<th scope="col">Adresse</th>
+				<th scope="col">Ville</th>
+				<th scope="col">Code Postal</th>
+				<th scope="col">Num° Standard</th>
+				<th scope="col">Email Standard</th>
+				<th scope="col"></th>
+			</tr>
+			{% for societe in societes %}
+				<tr>
+					<td>
+						{{societe.nom}}
+					</td>
+					<td>
+						{{societe.siret}}
+					</td>
+					<td>
+						{{societe.adresse}}
+					</td>
+					<td>
+						{{societe.ville}}
+					</td>
+					<td>
+						{{societe.codePostal}}
+					</td>
+					<td>
+						{{societe.numStandard}}
+					</td>
+					<td>
+						{{societe.emailStandard}}
+					</td>
+					<td>
+						<a class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal{{societe.id}}">Contacts</a>
+						<a class="btn btn-danger">Audit</a>
+						<a class="btn btn-primary" href="{{ path('app_modifier_societe',{'c':societe}) }}">Modifier Prospect</a>
+						{% if is_granted('ROLE_ADMIN')%}
+							<a class="btn btn-danger" href="{{ path('app_suprimer_societe',{'s':societe}) }}">Supprimer</a>
+						{% endif %}
+					</td>
+				</tr>
+
+				<div class="modal fade" id="modal{{societe.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog modal-xl">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h1 class="modal-title fs-5" id="exampleModalLabel">Contact de
+									{{societe.nom}}</h1>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								{% include 'contact/index.html.twig' with {'contacts':contacts,'societe':societe} %}
+								<div class="modal-footer">
+									<a type="button" class="btn btn-success" href="{{ path('app_ajout_contact',{'s':societe}) }}"> <i class="bi bi-plus">+</i> Contact
+									</a>
+									<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</table>
+		<a class="btn btn-success" href="{{ path('app_ajout_societe') }}"><i class="bi bi-plus">+</i> Prospects</a>
+
+	</div>
+{% endblock %}
