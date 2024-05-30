@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Theme;
 use App\Form\ThemeType;
+use App\Repository\QuestionRepository;
 use App\Repository\ThemeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,13 +26,18 @@ class ThemeController extends AbstractController
     }
 
     #[Route('/new', name: 'app_theme_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, ThemeRepository $themeRepository): Response
     {
         $theme = new Theme();
         $form = $this->createForm(ThemeType::class, $theme);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $maxOrder = $themeRepository->createQueryBuilder('t')
+                ->select('MAX(t.ordre)')
+                ->getQuery()
+                ->getSingleScalarResult();
+            $theme->setOrdre($maxOrder + 1);
             $entityManager->persist($theme);
             $entityManager->flush();
 
@@ -43,7 +50,7 @@ class ThemeController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_theme_show', methods: ['GET'])]
+    #[Route('/{id}/show', name: 'app_theme_show', methods: ['GET'])]
     public function show(Theme $theme): Response
     {
         return $this->render('theme/show.html.twig', [
@@ -69,9 +76,10 @@ class ThemeController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_theme_delete', methods: ['POST'])]
+    #[Route('/{id}/remove', name: 'app_theme_delete', methods: ['POST'])]
     public function delete(Request $request, Theme $theme, EntityManagerInterface $entityManager): Response
     {
+        dd('tolo');
         if ($this->isCsrfTokenValid('delete' . $theme->getId(), $request->request->get('_token'))) {
             $entityManager->remove($theme);
             $entityManager->flush();
@@ -80,26 +88,33 @@ class ThemeController extends AbstractController
         return $this->redirectToRoute('app_theme_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/themes/order', name: 'theme_order', methods: ['POST'])]
-    public function order(Request $request, EntityManagerInterface $em): Response
+    #[Route('/order', name: 'theme_order', methods: ['POST'])]
+    public function ordre(Request $request, ThemeRepository $themeRepository, QuestionRepository $questionRepository, EntityManagerInterface $em): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
 
-        if (isset($data['order']) && is_array($data['order'])) {
-            $orderData = $data['order'];
-
-            foreach ($orderData as $index => $themeId) {
-                $theme = $em->getRepository(Theme::class)->find($themeId);
+        if (isset($data['themeOrder']) && is_array($data['themeOrder'])) {
+            foreach ($data['themeOrder'] as $index => $themeId) {
+                $theme = $themeRepository->find($themeId);
                 if ($theme) {
                     $theme->setOrdre($index + 1);
-                    $em->persist($theme);
                 }
             }
-            $em->flush();
-
-            return new Response('Order updated', Response::HTTP_OK);
         }
 
-        return new Response('Invalid data', Response::HTTP_BAD_REQUEST);
+        if (isset($data['questionOrders']) && is_array($data['questionOrders'])) {
+            foreach ($data['questionOrders'] as $themeId => $order) {
+                foreach ($order as $index => $questionId) {
+                    $question = $questionRepository->find($questionId);
+                    if ($question) {
+                        $question->setOrdre($index + 1);
+                    }
+                }
+            }
+        }
+
+        $em->flush();
+
+        return new JsonResponse(['status' => 'Order updated']);
     }
 }

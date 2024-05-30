@@ -17,23 +17,30 @@ use Symfony\Component\Routing\Annotation\Route;
 class QuestionController extends AbstractController
 {
     #[Route('/', name: 'app_question_index', methods: ['GET'])]
-    public function index(QuestionRepository $questionRepository, EntityManagerInterface $em): Response
+    public function index(QuestionRepository $questionRepository, ThemeRepository $themeRepository): Response
     {
-        $themes = $em->getRepository(Theme::class)->findBy([], ['ordre' => 'ASC']);
         return $this->render('question/index.html.twig', [
-            'questions' => $questionRepository->findAll(),
-            'themes' => $themes
+            'questions' => $questionRepository->findBy([], ['ordre' => 'ASC']),
+            'themes' => $themeRepository->findBy([], ['ordre' => 'ASC'])
         ]);
     }
 
     #[Route('/new/{t}', name: 'app_question_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, Theme $t): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, Theme $t, QuestionRepository $questionRepository): Response
     {
         $question = new Question();
         $form = $this->createForm(QuestionType::class, $question);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $maxOrder = $questionRepository->createQueryBuilder('q')
+                ->select('MAX(q.ordre)')
+                ->where('q.id_theme = :theme')
+                ->setParameter('theme', $t)
+                ->getQuery()
+                ->getSingleScalarResult();
+
+            $question->setOrdre($maxOrder + 1);
             $question->setIdTheme($t);
             $entityManager->persist($question);
             $entityManager->flush();
@@ -76,7 +83,7 @@ class QuestionController extends AbstractController
     #[Route('/{id}', name: 'app_question_delete', methods: ['POST'])]
     public function delete(Request $request, Question $question, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$question->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $question->getId(), $request->request->get('_token'))) {
             $entityManager->remove($question);
             $entityManager->flush();
         }

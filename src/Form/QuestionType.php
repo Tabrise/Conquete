@@ -3,8 +3,6 @@
 namespace App\Form;
 
 use App\Entity\Question;
-use App\Entity\Theme;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -15,8 +13,7 @@ class QuestionType extends AbstractType
     {
         $builder
             ->add('intitule')
-            ->add('utiliser')
-            ->add('ordre');
+            ->add('utiliser');
     }
 
     public function configureOptions(OptionsResolver $resolver): void

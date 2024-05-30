@@ -13,7 +13,6 @@ class ThemeType extends AbstractType
     {
         $builder
             ->add('nom')
-            ->add('ordre')
             ->add('utiliser')
         ;
     }
