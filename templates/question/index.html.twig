@@ -22,6 +22,8 @@
 										{{ question.ordre }}
 										-
 										{{ question.intitule }}
+										<a class="btn btn-primary" href="{{ path('app_question_edit',{'id':question.id})}}">Modifier</a>
+
 									</div>
 								{% endif %}
 							{% endfor %}
@@ -35,10 +37,6 @@
 		{% endfor %}
 	</div>
 	<br/>
-
 	<button id="save-order-btn" class="btn btn-primary" data-url="{{ path('theme_order') }}">Enregistrer Ordre</button>
-
 	<script src="{{ asset('js/dragDrop.js') }}"></script>
-
-
 {% endblock %}

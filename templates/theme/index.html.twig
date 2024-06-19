@@ -9,17 +9,15 @@
         <thead>
             <tr>
                 <th>Nom</th>
-                <th>Ordre</th>
                 <th>Utiliser</th>
-                <th>actions</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
         {% for theme in themes %}
             <tr>
                 <td>{{ theme.nom }}</td>
-                <td>{{ theme.ordre }}</td>
-                <td>{{ theme.utiliser ? 'Yes' : 'No' }}</td>
+                <td>{{ theme.utiliser ? 'Oui' : 'Non' }}</td>
                 <td>
                     <a class="btn btn-primary" href="{{ path('app_theme_show', {'id': theme.id}) }}">Voire</a>
                     <a class="btn btn-primary" href="{{ path('app_theme_edit', {'id': theme.id}) }}">Modifier</a>
@@ -27,7 +25,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">no records found</td>
+                <td colspan="5">Pas de donnée</td>
             </tr>
         {% endfor %}
         </tbody>

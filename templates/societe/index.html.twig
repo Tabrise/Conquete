@@ -47,7 +47,7 @@
 					</td>
 					<td>
 						<a class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal{{societe.id}}">Contacts</a>
-						<a class="btn btn-danger">Audit</a>
+						<a class="btn btn-danger" href="{{ path('app_audit_new',{'societeId':societe.id}) }}" >Audit</a>
 						<a class="btn btn-primary" href="{{ path('app_modifier_societe',{'c':societe}) }}">Modifier Prospect</a>
 						{% if is_granted('ROLE_ADMIN')%}
 							<a class="btn btn-danger" href="{{ path('app_suprimer_societe',{'s':societe}) }}">Supprimer</a>

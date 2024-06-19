@@ -44,11 +44,10 @@ class QuestionController extends AbstractController
             $question->setIdTheme($t);
             $entityManager->persist($question);
             $entityManager->flush();
-
             return $this->redirectToRoute('app_question_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('question/new.html.twig', [
+        return $this->render('_form.html.twig', [
             'question' => $question,
             'form' => $form,
         ]);
