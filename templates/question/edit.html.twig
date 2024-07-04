@@ -5,13 +5,8 @@
 
 {% block body %}
 	<h1>Modifier question</h1>
-
+	
 	{{ include('question/_form.html.twig') }}
-
 	{{ include('question/_delete_form.html.twig') }}
-
-	<a href="{{ path('app_question_index') }}" class="btn btn-primary" style="color:white">
-		Retour
-	</a>
 
 {% endblock %}
