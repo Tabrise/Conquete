@@ -23,8 +23,7 @@
 		</div>
 		<table class="table table-hover table-bordered">
 			<tr>
-				<th scope="col">Nom</th>
-				<th scope="col">Adresse - Code Postal - Ville - Siret</th>
+				<th scope="col">Nom - Adresse - Code Postal - Ville - Siret</th>
 				<th scope="col">Num° - Email</th>
 				<th scope="col">Commentaire</th>
 				<th scope="col"></th>
@@ -34,8 +33,7 @@
 					<tr>
 						<td>
 							{{societe.nom}}
-						</td>
-						<td>
+							-
 							{{societe.adresse}}
 							-
 
@@ -52,7 +50,9 @@
 							-
 							{{societe.emailStandard}}
 						</td>
-						<td></td>
+						<td> 
+							{{societe.commentaire}}
+						</td>
 						<td>
 							<a class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal{{societe.id}}">Contacts</a>
 							<a class="btn btn-danger" href="{{ path('app_audit_new',{'societeId':societe.id}) }}">Audit</a>
