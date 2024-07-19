@@ -39,10 +39,14 @@ class SocieteType extends AbstractType
                     'Industrie' => 'Industrie'
                 ]
             ])
-            ->add('commentaire',TextareaType::class,[
-                'label'=>'Commentaire'
+            ->add('commentaire', TextareaType::class, [
+                'label' => 'Commentaire 0/75',
+                'attr' => ['maxlength' => '75']
             ])
-            ->add('submit', SubmitType::class, ['label' => 'Ajouter']);
+            ->add('submit', SubmitType::class, [
+                'label' => 'Enregistrer',
+                'attr' => ['class' => 'btn-success']
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

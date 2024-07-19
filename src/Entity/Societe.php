@@ -8,6 +8,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 #[ORM\Entity(repositoryClass: SocieteRepository::class)]
 class Societe
 {
@@ -50,6 +52,12 @@ class Societe
     private ?string $secteur = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\Length(
+        min: 2,
+        max: 75,
+        minMessage: 'Mettez un commentaire',
+        maxMessage: '{{ limit }} charactère max',
+    )]
     private ?string $commentaire = null;
 
     public function __construct()

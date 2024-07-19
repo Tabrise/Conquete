@@ -23,10 +23,9 @@ class SocieteController extends AbstractController
         if(in_array('ROLE_ADMIN',$this->getUser()->getRoles(),true))
             $sr = $sr->findAll();
         else
-            $sr = $sr->findBy(array('idUser'=>$user->getId()));
+            $sr = $sr->findBy(['idUser'=>$user->getId()]);
 
         return $this->render('societe/index.html.twig',[
-            'controller_name' => 'SocieteController',
             'societes' => $sr,
             'contacts' => $cr->findAll()
         ]);
@@ -43,7 +42,7 @@ class SocieteController extends AbstractController
             $em->flush();
             return $this->redirectToRoute('app_ajout_contact', ['s'=>$c], Response::HTTP_SEE_OTHER);
         }
-        return $this->render('_form.html.twig', [
+        return $this->render('societe/_form.html.twig', [
             'form'=>$form
         ]);
     }
@@ -60,7 +59,7 @@ class SocieteController extends AbstractController
 
             return $this->redirectToRoute('app_societe', [], Response::HTTP_SEE_OTHER);
         }
-        return $this->render('_form.html.twig', [
+        return $this->render('societe/_form.html.twig', [
             'form'=>$form
         ]);
     }
@@ -74,7 +73,7 @@ class SocieteController extends AbstractController
                 $em->flush();        
             }
         }
-         $s=$sr->find($s->getId());
+        $s=$sr->find($s->getId());
         $em->remove($s);
         $em->flush();
         $this->addFlash('Réussit',"La Societe a été supprimer");
