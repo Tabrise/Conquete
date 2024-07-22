@@ -50,13 +50,10 @@
 
         textarea.addEventListener('input', function () {
             const currentLength = textarea.value.length;
-            if(currentLength >= 75 || currentLength == 0){
+            if(currentLength >= 75 || currentLength == 0)
                 charCount.style.color = "#FF0000"
-            }
-            else{
+            else
                 charCount.style.color = "#000000"
-            }
-
             charCount.textContent = ` Commentaire ${currentLength}/75`;
         });
     });
