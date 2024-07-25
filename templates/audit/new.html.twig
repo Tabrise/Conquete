@@ -1,13 +1,10 @@
-{% extends 'base.html.twig' %}
-{% block title %}Audit
-{% endblock %}
 {% block body %}
-	<div class="d-flex justify-content-start" style="margin:2%">
+	<div class="d-flex justify-content-start">
 		{% if audit.auditResponses|length > 0 %}
 			<div class="col" style="margin-right:2%">
 				<div class="card text-left">
-					<h5 class="card-header">Audit de la Societe :
-						{{ societe.nom }}</h5>
+					<h5 class="card-header">Audit de la </b> :
+						{{ prospect.nom }}</h5>
 					<div class="card-body">
 						<p class="card-text">
 							{% for theme in themes %}
@@ -33,7 +30,7 @@
 			{{ form_start(form) }}
 			<div class="accordion" id="accordionThemes">
 				<h1>Audit de
-					{{ societe.nom }}</h1>
+					{{ prospect.nom }}</h1>
 				{% for theme in themes %}
 					{% if theme.utiliser %}
 						<div class="accordion-item" data-id="{{ theme.id }}">

@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit EtatSociete{% endblock %}
+
+{% block body %}
+    <h1>Edit EtatSociete</h1>
+
+    {{ include('etat_societe/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_etat_societe_index') }}">back to list</a>
+
+    {{ include('etat_societe/_delete_form.html.twig') }}
+{% endblock %}

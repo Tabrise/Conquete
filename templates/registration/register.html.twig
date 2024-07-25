@@ -1,19 +1,33 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Enregistrement{% endblock %}
+{% block title %}Inscription
+{% endblock %}
 
 {% block body %}
-    <h1>Nouvel Utilisateur</h1>
+	<div class="card text-center mx-auto" style="width:50%;margin-top:10%;">
+		<div class="card-header">
+			Inscription
+		</div>
+		<div class="card-body">
+			<h5 class="card-title">Créer un compte</h5>
+			{{ form_errors(registrationForm) }}
+			{{ form_start(registrationForm) }}
 
-    {{ form_errors(registrationForm) }}
+			<p class="card-text">
+				{{ form_row(registrationForm.email) }}
+				{{ form_row(registrationForm.plainPassword, {
+                    label: 'Password'
+                }) }}
+				{{ form_row(registrationForm.agreeTerms) }}
+			</p>
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+			<button type="submit" class="btn btn-primary">Inscrire</button>
+			{{ form_end(registrationForm) }}
+		</div>
+		<div class="card-footer text-body-secondary">
+			Com'Unity Conquete
+		</div>
+	</div>
 
-        <button type="submit" class="btn btn-primary">Register</button>
-    {{ form_end(registrationForm) }}
+
 {% endblock %}

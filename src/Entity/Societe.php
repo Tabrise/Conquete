@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\EtatSociete;
 use App\Repository\SocieteRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -59,6 +60,9 @@ class Societe
         maxMessage: '{{ limit }} charactère max',
     )]
     private ?string $commentaire = null;
+
+    #[ORM\ManyToOne(inversedBy: 'societes')]
+    private ?etatSociete $etat = null;
 
     public function __construct()
     {
@@ -232,6 +236,18 @@ class Societe
     public function setCommentaire(string $commentaire): static
     {
         $this->commentaire = $commentaire;
+
+        return $this;
+    }
+
+    public function getEtat(): ?EtatSociete
+    {
+        return $this->etat;
+    }
+
+    public function setEtat(?EtatSociete $etat): static
+    {
+        $this->etat = $etat;
 
         return $this;
     }
