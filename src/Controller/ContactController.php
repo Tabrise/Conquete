@@ -10,40 +10,41 @@ use App\Entity\Contact;
 use App\Entity\Societe;
 use App\Form\ContactType;
 use App\Repository\ContactRepository;
-use App\Repository\SocieteRepository;
 use Symfony\Component\HttpFoundation\Request;
 
 class ContactController extends AbstractController
 {
-    #[Route('/contact', name: 'app_contact')]
-    public function index(ContactRepository $cr, SocieteRepository $sr): Response
+    #[Route('/contact/{s}', name: 'app_contact')]
+    public function index(Societe $s,ContactRepository $cr): Response
     {
-        $sr = $sr->findAll();
-
         return $this->render('contact/index.html.twig', [
-            'controller_name' => 'ContactController',
-            'contacts' => $cr->findAll(),
-            'nomSociete' => $sr
+            'contacts' => $cr->findBy(['idSociete' => $s->getId()]),
+            'nomSociete' => $s->getNom(),
+            'prospect'=> $s
         ]);
     }
     #[Route('/contact/ajout/{s}', name: 'app_ajout_contact')]
-    public function create(Request $request, EntityManagerInterface $em, Societe $s): Response
+    public function create(Request $request, EntityManagerInterface $em, Societe $s)
     {
-        $c = new Contact();
-        $form = $this->createForm(ContactType::class, $c);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $c->setIdSociete($s);
-            $em->persist($c);
+        $newC = new Contact();
+        $formContact = $this->createForm(ContactType::class, $newC);
+        $formContact->handleRequest($request);
+
+        if ($formContact->isSubmitted() && $formContact->isValid()) {
+            $newC->setIdSociete($s);
+            $em->persist($newC);
             $em->flush();
             $this->addFlash('Réussit', "Le contact a été ajouté");
-
-            return $this->redirectToRoute('app_societe', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_page',[
+                's'=>$s,
+            ]);
         }
-
-        return $this->render('_form.html.twig', [
-            'form' => $form
+        
+        return $this->render('contact/add.html.twig', [
+            'prospect'=> $s,
+            'formContact' => $formContact,
         ]);
+      
     }
     #[Route('/contact/{c}/modifier', name: 'app_modifier_contact')]
     public function edit(Request $request, Contact $c, EntityManagerInterface $em): Response

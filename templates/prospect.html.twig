@@ -4,14 +4,25 @@
 {% endblock %}
 
 {% block body%}
+
 	<div class="card text-center">
 		<div class="card-header">
-			<h1>
-				Mon Prospect:
-				{{prospect.nom}}
-			</h1>
-			<div class="d-flex text-start justify-content-between">
-				<div style="margin-right:25;">
+			<div class="d-flex text-start justify-content-between  align-items-center">
+				<a href="{{ path('app_societe') }}" class="btn btn-primary " style="color:white">
+					<i class="bi bi-arrow-left"></i>
+					Retour
+				</a>
+				<h2>
+					Mon Prospect:
+					{{prospect.nom}}
+				</h2>
+				<a class="btn btn-primary text-center" data-bs-toggle="modal" data-bs-target="#modal{{prospect.id}}" style="color:white">
+					<i class="bi bi-person-gear"></i>
+					Modifier
+				</a>
+			</div>
+			<div class="d-flex text-start justify-content-between ">
+				<div class="d-flex flex-column mb-3" style="margin-right:25;">
 					<p>
 						<b>Adresse :
 						</b>
@@ -20,6 +31,8 @@
 						<b>Code Postal :
 						</b>
 						{{prospect.codePostal}}</p>
+				</div>
+				<div class="d-flex flex-column mb-3" style="margin-right:25;">
 					<p>
 						<b>Ville :
 						</b>
@@ -29,7 +42,7 @@
 						</b>
 						{{prospect.siret}}</p>
 				</div>
-				<div style="margin-right:25;">
+				<div class="d-flex flex-column mb-3" style="margin-right:25;">
 					<p>
 						<b>Num° Standard :
 						</b>
@@ -38,30 +51,39 @@
 						<b>Email Standard :
 						</b>
 						{{prospect.emailStandard}}</p>
+				</div>
+				<div class="d-flex flex-column mb-3" style="margin-right:25;">
 					<p>
 						<b>Commentaire :
 						</b>
 						{{prospect.commentaire}}</p>
+					<p>
+						<b>
+							État:
+						</b>
+						{{prospect.etat}}</p>
 				</div>
-
-				<div style="margin-right:25;">
+				<div class="d-flex flex-column mb-3" style="margin-right:25;">
 					<p>
 						<b>Nom Prénom :
 						</b>
-						{{contacts|first.nom}}
-						{{contacts|first.Prenom}}</p>
+						{{contact.nom}}
+						{{contact.Prenom}}</p>
 					<p>
 						<b>Poste :
 						</b>
-						{{contacts|first.poste}}</p>
+						{{contact.poste}}</p>
+				</div>
+
+				<div class="d-flex flex-column mb-3" style="margin-right:25;">
 					<p>
 						<b>Num° Contact :
 						</b>
-						{{contacts|first.tel}}</p>
+						{{contact.tel}}</p>
 					<p>
 						<b>Email Contact :
 						</b>
-						{{contacts|first.email}}</p>
+						{{contact.email}}</p>
 				</div>
 			</div>
 			<ul class="nav nav-pills">
@@ -71,22 +93,30 @@
 						Contact</a>
 				</li>
 				<li class="nav-item">
-					<a class="btn btn-outline-primary btn-lg" style="margin-right:5px;" data-bs-toggle="tab" href="#audit">Audit</a>
+					<a class="btn btn-outline-primary btn-lg" style="margin-right:5px;" data-bs-toggle="tab" href="#audit">
+						<i class="bi bi-clipboard2-data"></i>
+						Audit</a>
 				</li>
-				<li class="nav-item">
-					<a class="btn btn-outline-info btn-lg " style="margin-right:5px;" data-bs-toggle="tab" href="#">Offres</a>
-				</li>
+				{# <li class="nav-item">
+																					<a class="btn btn-outline-info btn-lg " style="margin-right:5px;" data-bs-toggle="tab" href="#">Offres</a>
+																				</li> #}
 			</ul>
 		</div>
 		<div class="card-body">
 			<div class="tab-content">
 				<div class="tab-pane fade show active" id="contact">
-					<p class="card-text">{{include('contact/index.html.twig')}}</p>
+					<p class="card-text">{{render(path('app_contact',{s:prospect}))}}</p>
 				</div>
 				<div class="tab-pane fade" id="audit">
-					<p class="card-text">{{include('audit/new.html.twig')}}</p>
+					<p class="card-text">{{render(path('app_audit',{s:prospect}))}}</p>
 				</div>
 			</div>
 		</div>
 	</div>
+	<a href="{{ path('app_societe') }}" class="btn btn-primary" style="color:white">
+		<i class="bi bi-arrow-left"></i>
+		Retour
+	</a>
+	{{render(path('app_modifier_societe',{s:prospect}))}}
+
 {% endblock %}

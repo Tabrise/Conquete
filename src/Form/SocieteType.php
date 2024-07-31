@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Societe;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -42,6 +43,13 @@ class SocieteType extends AbstractType
             ->add('commentaire', TextareaType::class, [
                 'label' => 'Commentaire 0/75',
                 'attr' => ['maxlength' => '75']
+            ])
+            ->add('contacts', CollectionType::class, [
+                'entry_type' => ContactType::class,
+                'entry_options' => ['label' => false],
+                'by_reference' => false,
+                'allow_add' => true,
+                'required'=>false
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Enregistrer',

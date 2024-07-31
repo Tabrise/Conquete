@@ -18,17 +18,17 @@ class ContactType extends AbstractType
         $builder
             ->add('nom')
             ->add('prenom')
-            ->add('civilite', ChoiceType::class,[
-                'choices'=> ['Mr'=>'Mr','Mme'=>'Mme','Autres'=>'Autres'],
-                'label'=>'',
+            ->add('civilite', ChoiceType::class, [
+                'choices' => ['Mr' => 'Mr', 'Mme' => 'Mme', 'Autres' => 'Autres'],
+                'label' => '',
             ])
             ->add('poste')
             ->add('email')
             ->add('tel')
-            ->add('commentaire',TextareaType::class,[
-                'label'=>'Observation(optionnel):'
+            ->add('commentaire', TextareaType::class, [
+                'label' => 'Observation(optionnel):'
             ])
-            ->add('submit',SubmitType::class,['label' => 'Valider']);
+            ->add('submit', SubmitType::class, ['label' => 'Ajouter', 'attr' => ['class' => 'btn-success']]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

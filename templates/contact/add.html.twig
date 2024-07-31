@@ -1,14 +1,18 @@
-<div class="modal fade" id="modal{{prospect.id}}" tabindex="-1"  aria-hidden="true">
-	<div class="modal-dialog modal-xl">
+<div class="modal fade" id="modalContact" tabindex="-1" aria-hidden="true">
+	<div class="modal-dialog modal-sm">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h1 class="modal-title fs-5" id="exampleModalLabel">Contact de
+				<h1 class="modal-title fs-5" id="exampleModalLabel">Ajout de contact
 					{{prospect.nom}}</h1>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body">
+				<div class="d-flex flex-column">
+					{{form_start(formContact,{action:path('app_ajout_contact',{s:prospect}),'method':'POST'})}}
+					
+					{{form_end(formContact)}}
+				</div>
 				<div class="modal-footer">
-
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer
 					</button>
 				</div>

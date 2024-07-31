@@ -34,7 +34,7 @@ class Societe
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $emailStandard = null;
 
-    #[ORM\OneToMany(targetEntity: Contact::class, mappedBy: 'idSociete')]
+    #[ORM\OneToMany(targetEntity: Contact::class, mappedBy: 'idSociete', cascade:["persist"])]
     private Collection $contacts;
 
     #[ORM\Column(length: 255)]

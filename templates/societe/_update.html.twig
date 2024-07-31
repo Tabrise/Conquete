@@ -1,0 +1,54 @@
+<div class="modal fade" id="modal{{prospect.id}}" tabindex="-1" aria-hidden="true">
+	<div class="modal-dialog modal-xl">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title fs-5" id="exampleModalLabel">{{action}}
+					de
+					{{prospect.nom}}</h1>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<div class="d-flex flex-column">
+					{{form_start(form)}}
+					{{form_row(form.nom)}}
+					{{form_row(form.adresse)}}
+					{{form_row(form.codePostal)}}
+					{{form_row(form.ville)}}
+					{{form_row(form.siret)}}
+					{{form_row(form.secteur)}}
+					{{form_row(form.statut)}}
+					{{form_row(form.numStandard)}}
+					{{form_row(form.emailStandard)}}
+					{{form_row(form.commentaire)}}
+					{{form_row(form.submit)}}
+					{{form_end(form)}}
+				</div>
+                <div>
+                    
+                </div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+        const textarea = document.getElementById('societe_commentaire');
+        const charCount = document.querySelector('label[for=societe_commentaire]');
+        const currentLength = textarea.value.length;
+        charCount.textContent = ` Commentaire ${currentLength}/75`;
+
+        textarea.addEventListener('input', function () {
+        const currentLength = textarea.value.length;
+        if (currentLength >= 75 || currentLength == 0) 
+        charCount.style.color = "#FF0000"
+        else 
+        charCount.style.color = "#000000"
+        charCount.textContent = ` Commentaire ${currentLength}/75`;
+        });
+        });
+</script>

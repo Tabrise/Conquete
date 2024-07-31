@@ -46,7 +46,6 @@
 						</ul>
 					</li>
 					{% if is_granted('ROLE_ADMIN') %}
-
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 								Admin
@@ -90,9 +89,4 @@
 			</div>
 		</div>
 	</nav>
-	<body>
-		{% for message in app.flashes('Réussit') %}
-			<div style="color:green;">{{message}}</div>
-		{% endfor %}
-	</body>
 {% endblock %}

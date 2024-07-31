@@ -3,60 +3,61 @@
 		{% if audit.auditResponses|length > 0 %}
 			<div class="col" style="margin-right:2%">
 				<div class="card text-left">
-					<h5 class="card-header">Audit de la </b> :
-						{{ prospect.nom }}</h5>
-					<div class="card-body">
-						<p class="card-text">
-							{% for theme in themes %}
-								<h3 style="color:red;">{{theme.nom}}</h3>
-								{% for key,response in audit.auditResponses %}
-									{% if response.question.utiliser and response.question.idTheme == theme %}
-										<b style="margin-bottom:0px !important;">
-											{{response.question.ordre}}
-											-
-											{{response.question.intitule}}
-										</b>
-										<p>{{ response.response }}</p>
-									{% endif %}
-								{% endfor %}
+					<h5 class="card-header">Audit de
+					</b>
+					:
+					{{ prospect.nom }}</h5>
+				<div class="card-body">
+					<p class="card-text">
+						{% for theme in themes %}
+							<h3 style="color:red;">{{theme.nom}}</h3>
+							{% for key,response in audit.auditResponses %}
+								{% if response.question.utiliser and response.question.idTheme == theme %}
+									<b style="margin-bottom:0px !important;">
+										{{response.question.ordre}}
+										-
+										{{response.question.intitule}}
+									</b>
+									<p>{{ response.response }}</p>
+								{% endif %}
 							{% endfor %}
-						</p>
-					</div>
+						{% endfor %}
+					</p>
 				</div>
 			</div>
-		{% endif %}
+		</div>
+	{% endif %}
 
-		<div class="col text-center" style="flex-grow:1;position:sticky;top:50px;">
-			{{ form_start(form) }}
-			<div class="accordion" id="accordionThemes">
-				<h1>Audit de
-					{{ prospect.nom }}</h1>
-				{% for theme in themes %}
-					{% if theme.utiliser %}
-						<div class="accordion-item" data-id="{{ theme.id }}">
-							<h2 class="accordion-header">
-								<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ theme.id }}" aria-expanded="true" aria-controls="collapse{{ theme.id }}">
-									{{ theme.nom }}
-								</button>
-							</h2>
-							<div id="collapse{{ theme.id }}" class="accordion-collapse collapse" data-bs-parent="#accordionThemes">
-								<div class="accordion-body">
-									{% for question in questions %}
-										{% if question.utiliser and question.idTheme == theme %}
-											<div class="mb-3">
-												{{ form_row(form['response_' ~ question.id]) }}
-											</div>
-										{% endif %}
-									{% endfor %}
-								</div>
+	<div class="col text-center" style="flex-grow:1;position:sticky;top:50px;">
+		{{ form_start(form, {'action': path('app_audit',{s:prospect}), 'method': 'POST'}) }}
+		<div class="accordion" id="accordionThemes">
+			<h1>Audit de
+				{{ prospect.nom }}</h1>
+			{{ form_errors(form) }}
+
+			{% for theme in themes %}
+				{% if theme.utiliser %}
+					<div class="accordion-item" data-id="{{ theme.id }}">
+						<h2 class="accordion-header">
+							<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ theme.id }}" aria-expanded="true" aria-controls="collapse{{ theme.id }}">
+								{{ theme.nom }}
+							</button>
+						</h2>
+						<div id="collapse{{ theme.id }}" class="accordion-collapse collapse" data-bs-parent="#accordionThemes">
+							<div class="accordion-body">
+								{% for question in questions %}
+									{% if question.utiliser and question.idTheme == theme %}
+										<div class="mb-3">
+											{{ form_row(form['response_' ~ question.id]) }}
+										</div>
+									{% endif %}
+								{% endfor %}
 							</div>
 						</div>
-					{% endif %}
-				{% endfor %}
-			</div>
-			<button class="btn btn-primary">
-				Enregistrer
-			</button>
+					</div>
+				{% endif %}
+			{% endfor %}
 		</div>
+		{{ form_end(form) }}
 	</div>
-{% endblock %}
+</div>{% endblock %}

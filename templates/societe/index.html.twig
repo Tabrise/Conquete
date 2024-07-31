@@ -13,7 +13,6 @@
 				<th scope="col">Nom - Adresse - Code Postal - Ville - Siret</th>
 				<th scope="col-2">Num° - Email</th>
 				<th scope="col">Commentaire</th>
-				<th scope="col"></th>
 			</tr>
 			<tbody class="table-group-divider">
 				{% for societe in societes %}
@@ -38,45 +37,10 @@
 							{{societe.commentaire}}
 						</td>
 						<td>
-							<div class="btn-group" role="group" aria-label="Basic mixed styles example">
-								<a class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal{{societe.id}}">
-									<i class="bi bi-person-lines-fill"></i>
-									Contacts</a>
-								<a class="btn btn-danger" href="{{ path('app_audit_new',{'societeId':societe.id}) }}">
-									<i class="bi bi-clipboard-minus"></i>
-									Audit</a>
-								<a class="btn btn-primary" href="{{ path('app_modifier_societe',{'c':societe}) }}">
-									<i class="bi bi-pen"></i>
-									Modifier</a>
-								{% if is_granted('ROLE_ADMIN')%}
-									<a class="btn btn-danger" href="{{ path('app_suprimer_societe',{'s':societe}) }}">Supprimer</a>
-								{% endif %}
-							</div>
+							<a class="btn btn-success" href="{{ path('app_page',{s:societe})}}"> Voire </a>
 						</td>
 					</tr>
 
-					<div class="modal fade" id="modal{{societe.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-						<div class="modal-dialog modal-xl">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h1 class="modal-title fs-5" id="exampleModalLabel">Contact de
-										{{societe.nom}}</h1>
-									<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-								</div>
-								<div class="modal-body">
-									{% include 'contact/index.html.twig' with {'contacts':contacts,'societe':societe} %}
-									<div class="modal-footer">
-										<a type="button" class="btn btn-success" href="{{ path('app_ajout_contact',{'s':societe}) }}">
-											<i class="bi bi-person-add"></i>
-											Contact
-										</a>
-										<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer
-										</button>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
 				{% endfor %}
 			</tbody>
 		</table>
