@@ -1,0 +1,100 @@
+{% block body %}
+	<div class="card-header">
+		<div class="d-flex text-start justify-content-between  align-items-center">
+			<a href="{{ path('app_societe') }}" class="btn btn-primary " style="color:white">
+				<i class="bi bi-arrow-left"></i>
+				Retour
+			</a>
+			<h2>
+					<i class="{{prospect.etat.logo}}"></i>
+
+				Mon Prospect:
+				{{prospect.nom}}
+			</h2>
+			<a class="btn btn-primary text-center" data-bs-toggle="modal" data-bs-target="#modification{{prospect.siret}}" style="color:white">
+				<i class="bi bi-person-gear"></i>
+				Modifier
+			</a>
+		</div>
+		<div class="d-flex text-start justify-content-between ">
+			<div class="d-flex flex-column mb-3" style="margin-right:25;">
+				<p>
+					<b>Adresse :
+					</b>
+					{{prospect.adresse}}</p>
+				<p>
+					<b>Code Postal :
+					</b>
+					{{prospect.codePostal}}</p>
+			</div>
+			<div class="d-flex flex-column mb-3" style="margin-right:25;">
+				<p>
+					<b>Ville :
+					</b>
+					{{prospect.ville}}</p>
+				<p>
+					<b>Siret :
+					</b>
+					{{prospect.siret}}</p>
+			</div>
+			<div class="d-flex flex-column mb-3" style="margin-right:25;">
+				<p>
+					<b>Num° Standard :
+					</b>
+					{{prospect.numStandard}}</p>
+				<p>
+					<b>Email Standard :
+					</b>
+					{{prospect.emailStandard}}</p>
+			</div>
+			<div class="d-flex flex-column mb-3" style="margin-right:25;">
+				<p>
+					<b>Commentaire :
+					</b>
+					{{prospect.commentaire}}</p>
+				<p>
+					<b>
+						État:
+					</b>
+					{{prospect.etat.nom}}</p>
+
+			</div>
+			<div class="d-flex flex-column mb-3" style="margin-right:25;">
+				<p>
+					<b>Nom Prénom :
+					</b>
+					{{contact.nom}}
+					{{contact.Prenom}}</p>
+				<p>
+					<b>Poste :
+					</b>
+					{{contact.poste}}</p>
+			</div>
+			<div class="d-flex flex-column mb-3" style="margin-right:25;">
+				<p>
+					<b>Num° Contact :
+					</b>
+					{{contact.tel}}</p>
+				<p>
+					<b>Email Contact :
+					</b>
+					{{contact.email}}</p>
+			</div>
+		</div>
+		<ul class="nav nav-pills">
+			<li class="nav-item">
+				<a class="btn btn-outline-success btn-lg active" style="margin-right:5px;" data-bs-toggle="tab" href="#contact">
+					<i class="bi bi-person-lines-fill"></i>
+					Contact</a>
+			</li>
+			<li class="nav-item">
+				<a class="btn btn-outline-primary btn-lg" style="margin-right:5px;" data-bs-toggle="tab" href="#audit">
+					<i class="bi bi-clipboard2-data"></i>
+					Audit</a>
+			</li>
+			{# <li class="nav-item">
+								<a class="btn btn-outline-info btn-lg " style="margin-right:5px;" data-bs-toggle="tab" href="#">Offres</a>
+							</li> #}
+		</ul>
+	</div>
+{% endblock %}

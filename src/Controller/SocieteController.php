@@ -2,21 +2,16 @@
 
 namespace App\Controller;
 
-use App\Entity\Audit;
-use App\Entity\AuditResponse;
+
 use App\Entity\Societe;
-use App\Entity\Contact;
 use App\Entity\User;
-use App\Form\AuditType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\SocieteType;
-use App\Form\ContactType;
-use App\Repository\AuditResponseRepository;
+
 use App\Repository\ContactRepository;
-use App\Repository\QuestionRepository;
 use App\Repository\SocieteRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
@@ -65,21 +60,20 @@ class SocieteController extends AbstractController
         $form = $this->createForm(SocieteType::class, $s);
         $form->handleRequest($request);
 
-        $form = $this->createForm(SocieteType::class, $s);
-        $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($s);
             $em->flush();
             $this->addFlash('Réussit', "Le Prospect a été modifié");
 
-            return $this->redirectToRoute('app_societe', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_page', ['s'=>$s], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('societe/_update.html.twig', [
+        return $this->render('util/_modal.html.twig', [
             'form' => $form,
             'action' => 'Modification',
-            'prospect' => $s
+            'entite' => $s,
+            'twig'=>'societe/_update.html.twig',
+            'id'=>$s->getSiret()
         ]);
     }
     #[Route('/{s}/suprimer', name: 'app_suprimer_societe')]
@@ -98,11 +92,9 @@ class SocieteController extends AbstractController
         $this->addFlash('Réussit', "La Societe a été supprimer");
         return $this->redirectToRoute('app_societe', [], Response::HTTP_SEE_OTHER);
     }
-
     #[Route('/info/{s}', name: 'app_page')]
-    public function page(Societe $s, SocieteRepository $sr, ContactRepository $cr, Request $request, EntityManagerInterface $em, QuestionRepository $questionRepository, AuditResponseRepository $arr)
+    public function page(Societe $s, SocieteRepository $sr, ContactRepository $cr)
     {
-       
         $s = $sr->find($s->getId());
         $c = $cr->findOneBy(['idSociete' => $s->getId()]);
 

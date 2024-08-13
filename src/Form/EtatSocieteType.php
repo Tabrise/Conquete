@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\EtatSociete;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -13,7 +14,11 @@ class EtatSocieteType extends AbstractType
     {
         $builder
             ->add('nom')
-            ->add('logo')
+            ->add('logo',  ChoiceType::class, [
+                'choices' => 
+                ['' => 'Mr', 'Mme' => 'Mme', 'Autres' => 'Autres'],
+                'label' => '',
+            ])
         ;
     }
 

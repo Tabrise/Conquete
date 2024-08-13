@@ -28,7 +28,7 @@ class ContactType extends AbstractType
             ->add('commentaire', TextareaType::class, [
                 'label' => 'Observation(optionnel):'
             ])
-            ->add('submit', SubmitType::class, ['label' => 'Ajouter', 'attr' => ['class' => 'btn-success']]);
+            ->add('submit', SubmitType::class, ['label' => 'Enregistrer', 'attr' => ['class' => 'btn-success']]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

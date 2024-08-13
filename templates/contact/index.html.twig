@@ -7,6 +7,7 @@
 				<th scope="col">Poste</th>
 				<th scope="col">Email</th>
 				<th scope="col">Tel</th>
+				<th scope="col"></th>
 			</tr>
 		</thead>
 		<tbody class="table-group-divider">
@@ -17,12 +18,18 @@
 					<td>{{contact.poste}}</td>
 					<td>{{contact.email}}</td>
 					<td>{{contact.tel}}</td>
+					<td>
+						<a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modification{{contact}}">
+							<i class="bi bi-person-fill-gear"></i>
+							Contacts</a>
+					</td>
 				</tr>
-				{{render(path('app_ajout_contact',{s:prospect}))}}
+				{{render(path('app_modifier_contact',{c:contact}))}}
 			{% endfor %}
 		</tbody>
 	</table>
-	<a class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalContact">
+	<a class="btn btn-success" data-bs-toggle="modal" data-bs-target="#ajout">
 		<i class="bi bi-person-plus"></i>
 		Contacts</a>
+				{{render(path('app_ajout_contact',{s:prospect}))}}
 {% endblock %}

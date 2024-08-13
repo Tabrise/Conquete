@@ -23,14 +23,15 @@ class ContactController extends AbstractController
             'prospect'=> $s
         ]);
     }
+
     #[Route('/contact/ajout/{s}', name: 'app_ajout_contact')]
     public function create(Request $request, EntityManagerInterface $em, Societe $s)
     {
         $newC = new Contact();
-        $formContact = $this->createForm(ContactType::class, $newC);
-        $formContact->handleRequest($request);
+        $form = $this->createForm(ContactType::class, $newC);
+        $form->handleRequest($request);
 
-        if ($formContact->isSubmitted() && $formContact->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $newC->setIdSociete($s);
             $em->persist($newC);
             $em->flush();
@@ -40,12 +41,16 @@ class ContactController extends AbstractController
             ]);
         }
         
-        return $this->render('contact/add.html.twig', [
-            'prospect'=> $s,
-            'formContact' => $formContact,
+        return $this->render('util/_modal.html.twig', [
+            'action'=>'Ajout',
+            'entite'=> $s,
+            'id'=> $s->getId(),
+            'form' => $form,
+            'twig'=> 'contact/_add.html.twig'
         ]);
       
     }
+    
     #[Route('/contact/{c}/modifier', name: 'app_modifier_contact')]
     public function edit(Request $request, Contact $c, EntityManagerInterface $em): Response
     {
@@ -57,10 +62,14 @@ class ContactController extends AbstractController
             $em->flush();
             $this->addFlash('Réussit', "Le contact a été modifié");
 
-            return $this->redirectToRoute('app_societe', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_page', ['s'=>$c->getIdSociete()], Response::HTTP_SEE_OTHER);
         }
-        return $this->render('_form.html.twig', [
-            'form' => $form
+        return $this->render('util/_modal.html.twig', [
+            'action'=>'Modification',
+            'entite'=> $c,
+            'id'=> $c->getId(),
+            'form' => $form,
+            'twig'=> 'contact/_update.html.twig'
         ]);
     }
 
