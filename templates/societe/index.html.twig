@@ -4,20 +4,29 @@
 {% endblock %}
 
 {% block body %}
-	<style></style>
-
 	<div>
-		<h1>Mes Prospects</h1>
-		<table class="table table-hover table-bordered">
-			<tr>
+		<div>
+			<h1>Mes Prospects </h1>
+			<div style="text-align:center;color:black;padding-left:65px;color:#96232D">
+				<h5>
+					<i>
+						<b>Votre argument de vente !!!<span style="padding-left:20px;">"L'informatique ce n'est pas vôtre problème c'est notre métier"</span>
+						</b>
+					</i>
+				</h5>
+			</div>
+		</div>
+		<table class="table table-hover table-bordered ">
+			<tr class="table-warning">
 				<th scope="col">Nom - Adresse - Code Postal - Ville - Siret</th>
 				<th scope="col-2">Num° - Email</th>
 				<th scope="col">Commentaire</th>
+				<th scope="col"></th>
 			</tr>
 			<tbody class="table-group-divider">
 				{% for societe in societes %}
 					<tr>
-						<td>
+						<td style="color:blue;">
 							{{societe.nom}}
 							-
 							{{societe.adresse}}
@@ -28,12 +37,12 @@
 							-
 							{{societe.siret}}
 						</td>
-						<td>
+						<td style="color:blue;">
 							{{societe.numStandard}}
 							-
 							{{societe.emailStandard}}
 						</td>
-						<td>
+						<td style="color:blue;">
 							{{societe.commentaire}}
 						</td>
 						<td>
