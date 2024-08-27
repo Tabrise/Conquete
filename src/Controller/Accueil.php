@@ -9,7 +9,7 @@ class Accueil extends AbstractController{
     #[Route("/", name:"app_index")]
     public function index() :Response{
 
-        return $this->render('base.html.twig');
+        return $this->redirectToRoute('app_societe');
     }
     
 }
