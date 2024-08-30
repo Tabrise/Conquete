@@ -3,9 +3,12 @@
 {% block title %}New EtatSociete{% endblock %}
 
 {% block body %}
-    <h1>Create new EtatSociete</h1>
+    <h1>Ajout d'un Etat</h1>
 
     {{ include('etat_societe/_form.html.twig') }}
+    <div id="logo"></div>
+    <a class="btn btn-primary" href="{{ path('app_etat_societe_index') }}"><i class="bi bi-arrow-left"></i>Retour</a><br/>
+    <a class="btn btn-primary" href="https://icons.getbootstrap.com">Si aucun ne plait d'autre ici </a> 
+	<script src="{{ asset('js/logo.js') }}"></script>
 
-    <a href="{{ path('app_etat_societe_index') }}">back to list</a>
 {% endblock %}

@@ -6,7 +6,8 @@
 {% block body %}
 	<div>
 		<div>
-			<h1>Mes Prospects </h1>
+			<h1>Mes Prospects
+			</h1>
 			<div style="text-align:center;color:black;padding-left:65px;color:#96232D">
 				<h5>
 					<i>
@@ -26,7 +27,13 @@
 			<tbody class="table-group-divider">
 				{% for societe in societes %}
 					<tr>
+
+
 						<td style="color:blue;">
+							{% if societe.etat%}
+								<i class="{{societe.etat.logo}}"></i>
+							{% endif %}
+							
 							{{societe.nom}}
 							-
 							{{societe.adresse}}
@@ -46,19 +53,21 @@
 							{{societe.commentaire}}
 						</td>
 						<td>
-							<a class="btn btn-success" href="{{ path('app_page',{s:societe})}}"> Voire </a>
+							<a class="btn btn-success" href="{{ path('app_page',{s:societe})}}">
+								Voire
+							</a>
 						</td>
 					</tr>
 
 				{% endfor %}
 			</tbody>
-		</table>
+		</tbody>
+	</table>
 
-		<a class="btn btn-success" href="{{ path('app_ajout_societe') }}">
-			<i class="bi bi-person-plus"></i>
-			Prospects</a>
-		<a class="btn btn-outline-dark" href="{{path('app_logout')}}">Déconnexion</a>
+	<a class="btn btn-success" href="{{ path('app_ajout_societe') }}">
+		<i class="bi bi-person-plus"></i>
+		Prospects</a>
+	<a class="btn btn-outline-dark" href="{{path('app_logout')}}">Déconnexion</a>
 
 
-	</div>
-{% endblock %}
+</div>{% endblock %}

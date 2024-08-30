@@ -3,7 +3,6 @@
 namespace App\Form;
 
 use App\Entity\Contact;
-use App\Entity\Societe;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;

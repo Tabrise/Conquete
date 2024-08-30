@@ -34,7 +34,7 @@ class SocieteController extends AbstractController
         ]);
     }
     #[Route('/ajout', name: 'app_ajout_societe')]
-    public function create(Request $request, EntityManagerInterface $em, #[CurrentUser] User $user): Response
+     public function create(Request $request, EntityManagerInterface $em, #[CurrentUser] User $user): Response
     {
         $s = new Societe();
         $form = $this->createForm(SocieteType::class, $s);
@@ -57,6 +57,8 @@ class SocieteController extends AbstractController
     #[Route('/{s}/modifier', name: 'app_modifier_societe')]
     public function edit(Request $request, Societe $s, EntityManagerInterface $em): Response
     {
+        
+
         $form = $this->createForm(SocieteType::class, $s);
         $form->handleRequest($request);
 
@@ -65,15 +67,15 @@ class SocieteController extends AbstractController
             $em->flush();
             $this->addFlash('Réussit', "Le Prospect a été modifié");
 
-            return $this->redirectToRoute('app_page', ['s'=>$s], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_page', ['s' => $s], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('util/_modal.html.twig', [
             'form' => $form,
             'action' => 'Modification',
             'entite' => $s,
-            'twig'=>'societe/_update.html.twig',
-            'id'=>$s->getSiret()
+            'twig' => 'societe/_update.html.twig',
+            'id' => $s->getSiret()
         ]);
     }
     #[Route('/{s}/suprimer', name: 'app_suprimer_societe')]
@@ -93,10 +95,13 @@ class SocieteController extends AbstractController
         return $this->redirectToRoute('app_societe', [], Response::HTTP_SEE_OTHER);
     }
     #[Route('/info/{s}', name: 'app_page')]
-    public function page(Societe $s, SocieteRepository $sr, ContactRepository $cr)
+    public function page(Societe $s, SocieteRepository $sr, ContactRepository $cr,)
     {
         $s = $sr->find($s->getId());
         $c = $cr->findOneBy(['idSociete' => $s->getId()]);
+
+        if($s->getIdUser() !=  $this->getUser() && !in_array('ROLE_ADMIN', $this->getUser()->getRoles(), true))
+            return $this->redirectToRoute('app_societe');
 
         return $this->render('prospect.html.twig', [
             'prospect' => $s,

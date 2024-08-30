@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Societe;
+use App\Repository\EtatSocieteRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -15,6 +17,7 @@ class SocieteType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        
         $builder
             ->add('nom')
             ->add('siret')
@@ -54,6 +57,7 @@ class SocieteType extends AbstractType
             ->add('submit', SubmitType::class, [
                 'label' => 'Enregistrer',
                 'attr' => ['class' => 'btn-success']
+                
             ]);
     }
 
