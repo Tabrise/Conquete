@@ -6,8 +6,9 @@
 				Retour
 			</a>
 			<h2>
-					<i style="color:red;" class="{{prospect.etat.logo}}"></i>
-
+			{% if prospect.etat%}
+				<i style="color:red;" class="{{prospect.etat.logo}}"></i>
+			{% endif %}
 				Mon Prospect:
 				{{prospect.nom}}
 			</h2>
@@ -56,8 +57,10 @@
 					<b style="color:black;">
 						État:
 					</b>
-					{{prospect.etat.nom}}</p>
+			{% if prospect.etat%}
 
+					{{prospect.etat.nom}}</p>
+			{% endif %}
 			</div>
 			<div class="d-flex flex-column mb-3" style="margin-right:25;">
 				<p>

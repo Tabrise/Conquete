@@ -67,4 +67,13 @@ class SocieteType extends AbstractType
             'data_class' => Societe::class,
         ]);
     }
+
+    public function formatPhoneNumber(string $phoneNumber): string
+{
+    // Retirer tous les caractères non numériques pour nettoyer l'entrée
+    $cleaned = preg_replace('/[^0-9]/', '', $phoneNumber);
+
+    // Ajouter des points tous les deux chiffres
+    return preg_replace('/(\d{2})(?=\d)/', '$1.', $cleaned);
+}
 }

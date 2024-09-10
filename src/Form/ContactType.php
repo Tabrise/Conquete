@@ -9,6 +9,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 
 class ContactType extends AbstractType
 {
@@ -28,6 +30,14 @@ class ContactType extends AbstractType
                 'label' => 'Observation(optionnel):'
             ])
             ->add('submit', SubmitType::class, ['label' => 'Enregistrer', 'attr' => ['class' => 'btn-success']]);
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+            $data = $event->getData();
+
+            if (isset($data['tel'])) {
+                $data['tel'] = $this->formatPhoneNumber($data['tel']);
+                $event->setData($data);
+            }
+        });
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -35,5 +45,13 @@ class ContactType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Contact::class,
         ]);
+    }
+    public function formatPhoneNumber(string $phoneNumber): string
+    {
+        // Retirer tous les caractères non numériques pour nettoyer l'entrée
+        $cleaned = preg_replace('/[^0-9]/', '', $phoneNumber);
+
+        // Ajouter des points tous les deux chiffres
+        return preg_replace('/(\d{2})(?=\d)/', '$1.', $cleaned);
     }
 }

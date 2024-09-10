@@ -24,12 +24,12 @@ class AuditController extends AbstractController
         if (!$audit) {
             $audit = new Audit();
             $audit->setClient($s);
+            $rep=$audit;
         } else
             $rep = $arr->findQuestionsByAuditId($audit->getId());
 
         $form = $this->createForm(AuditType::class, $audit);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) { //From très particulier
             foreach ($form->all() as $child) {
                 if (strpos($child->getName(), 'response_') === 0) {

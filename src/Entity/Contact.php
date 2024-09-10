@@ -28,7 +28,7 @@ class Contact
     #[ORM\Column(length: 255)]
     private ?string $email = null;
 
-    #[ORM\Column(length: 10)]
+    #[ORM\Column(length: 14)]
     private ?string $tel = null;
 
     #[ORM\ManyToOne(inversedBy: 'contacts')]
@@ -142,7 +142,6 @@ class Contact
     public function setCommentaire(?string $commentaire): static
     {
         $this->commentaire = $commentaire;
-
         return $this;
     }
 }

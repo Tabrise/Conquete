@@ -27,26 +27,24 @@
 			<tbody class="table-group-divider">
 				{% for societe in societes %}
 					<tr>
-
-
 						<td style="color:blue;">
 							{% if societe.etat%}
-								<i class="{{societe.etat.logo}}"></i>
+								<i  style="color:red;" class="{{societe.etat.logo}}"></i>
 							{% endif %}
 							
 							{{societe.nom}}
-							-
+							|
 							{{societe.adresse}}
-							-
+							|
 							{{societe.codePostal}}
-							-
+							|
 							{{societe.ville}}
-							-
+							|
 							{{societe.siret}}
 						</td>
 						<td style="color:blue;">
 							{{societe.numStandard}}
-							-
+							|
 							{{societe.emailStandard}}
 						</td>
 						<td style="color:blue;">
