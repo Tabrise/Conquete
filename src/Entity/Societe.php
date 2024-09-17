@@ -64,9 +64,13 @@ class Societe
     #[ORM\ManyToOne(inversedBy: 'societes')]
     private ?etatSociete $etat = null;
 
+    #[ORM\OneToMany(targetEntity: Contrat::class, mappedBy: 'idSociete')]
+    private Collection $contrats;
+
     public function __construct()
     {
         $this->contacts = new ArrayCollection();
+        $this->contrats = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -248,6 +252,36 @@ class Societe
     public function setEtat(?EtatSociete $etat): static
     {
         $this->etat = $etat;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Contrat>
+     */
+    public function getContrats(): Collection
+    {
+        return $this->contrats;
+    }
+
+    public function addContrat(Contrat $contrat): static
+    {
+        if (!$this->contrats->contains($contrat)) {
+            $this->contrats->add($contrat);
+            $contrat->setIdSociete($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContrat(Contrat $contrat): static
+    {
+        if ($this->contrats->removeElement($contrat)) {
+            // set the owning side to null (unless already changed)
+            if ($contrat->getIdSociete() === $this) {
+                $contrat->setIdSociete(null);
+            }
+        }
 
         return $this;
     }

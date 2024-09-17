@@ -27,9 +27,13 @@ class Theme
     #[ORM\OneToMany(targetEntity: Question::class, mappedBy: 'id_theme')]
     private Collection $questions;
 
+    #[ORM\OneToMany(targetEntity: Articles::class, mappedBy: 'idTheme')]
+    private Collection $articles;
+
     public function __construct()
     {
         $this->questions = new ArrayCollection();
+        $this->articles = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -97,6 +101,36 @@ class Theme
             // set the owning side to null (unless already changed)
             if ($question->getIdTheme() === $this) {
                 $question->setIdTheme(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Articles>
+     */
+    public function getArticles(): Collection
+    {
+        return $this->articles;
+    }
+
+    public function addArticle(Articles $article): static
+    {
+        if (!$this->articles->contains($article)) {
+            $this->articles->add($article);
+            $article->setIdTheme($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArticle(Articles $article): static
+    {
+        if ($this->articles->removeElement($article)) {
+            // set the owning side to null (unless already changed)
+            if ($article->getIdTheme() === $this) {
+                $article->setIdTheme(null);
             }
         }
 

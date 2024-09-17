@@ -27,14 +27,12 @@
 			</div>
 		</div>
 	{% endif %}
-
 	<div class="col" style="flex-grow:1;position:sticky;top:50px;">
 		{{ form_start(form, {'action': path('app_audit',{s:prospect}), 'method': 'POST'}) }}
 		<div class="accordion" id="accordionThemes">
 			<h1>Audit de : 
 				{{ prospect.nom }}</h1>
 			{{ form_errors(form) }}
-
 			{% for theme in themes %}
 				{% if theme.utiliser %}
 					<div class="accordion-item text-start" data-id="{{ theme.id }}">
